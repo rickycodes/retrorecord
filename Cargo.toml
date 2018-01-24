@@ -1,0 +1,7 @@
+[package]
+name = "retrorecord"
+version = "0.1.0"
+authors = ["Ricky Miller <ricky.miller@gmail.com>"]
+
+[dependencies]
+notify = "4.0.0"
