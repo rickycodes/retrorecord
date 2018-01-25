@@ -1,19 +1,23 @@
 extern crate notify;
 
-use self::notify::{RecommendedWatcher, Watcher, RecursiveMode};
+use self::notify::{op, Watcher, RecursiveMode, RawEvent, raw_watcher};
 use std::sync::mpsc::channel;
-use std::time::Duration;
 
 pub fn watch() -> notify::Result<()> {
     let (tx, rx) = channel();
 
-    let mut watcher: RecommendedWatcher = try!(Watcher::new(tx, Duration::from_secs(2)));
+    let mut watcher = raw_watcher(tx).unwrap();
 
-    try!(watcher.watch("/home/pi/.config/retroarch/screenshots/", RecursiveMode::Recursive));
+    watcher.watch("/home/pi/.config/retroarch/screenshots/", RecursiveMode::Recursive).unwrap();
 
     loop {
         match rx.recv() {
-            Ok(event) => println!("{:?}", event),
+            Ok(RawEvent{path: Some(path), op: Ok(op), cookie}) => {
+                if op == op::CLOSE_WRITE {
+                    println!("Screenshot taken: {:?}", path)
+                }
+            },
+            Ok(event) => println!("broken event: {:?}", event),
             Err(e) => println!("watch error: {:?}", e),
         }
     }
