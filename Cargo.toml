@@ -5,3 +5,5 @@ authors = ["Ricky Miller <ricky.miller@gmail.com>"]
 
 [dependencies]
 notify = "4.0.0"
+egg-mode = "0.12.0"
+tokio-core = "0.1.11"

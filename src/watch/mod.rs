@@ -13,7 +13,7 @@ pub fn watch(path: &str) -> PathBuf {
 
     loop {
         match rx.recv() {
-            Ok(RawEvent{path: Some(path), op: Ok(op), cookie}) => {
+            Ok(RawEvent{path: Some(path), op: Ok(op), ..}) => {
                 // println!("op is: {:?}", op);
                 if op == op::CLOSE_WRITE {
                     return path
