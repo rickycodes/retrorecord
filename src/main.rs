@@ -3,22 +3,18 @@ extern crate tokio_core;
 
 mod watch;
 mod tweet;
+mod message;
 
 fn main() {
     let screenshots = "/home/pi/.config/retroarch/screenshots/";
     // let recordings = "/home/pi/recordings/";
 
-    /* if let Ok(_) = tweet::tweet("test!") {
-        println!("posted tweet!");
-    } */
-
     loop {
         // println!("{:?}", watch::watch(screenshots));
         // println!("{:?}", watch::watch(recordings))
 
-        let path = watch::watch(screenshots);
-        // let path_str = path.to_str();
-        if let Ok(_) = tweet::tweet("test!", path.into_os_string().into_string().unwrap()) {
+        let screenshots_path = watch::watch(screenshots);
+        if let Ok(_) = tweet::tweet(message::get_message(), screenshots_path) {
             println!("posted tweet!");
         }
     }

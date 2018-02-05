@@ -2,9 +2,8 @@ extern crate notify;
 
 use self::notify::{op, Watcher, RecursiveMode, RawEvent, raw_watcher};
 use std::sync::mpsc::channel;
-use std::path::PathBuf;
 
-pub fn watch(path: &str) -> PathBuf {
+pub fn watch(path: &str) -> String {
     let (tx, rx) = channel();
 
     let mut watcher = raw_watcher(tx).unwrap();
@@ -14,9 +13,13 @@ pub fn watch(path: &str) -> PathBuf {
     loop {
         match rx.recv() {
             Ok(RawEvent{path: Some(path), op: Ok(op), ..}) => {
-                // println!("op is: {:?}", op);
+                println!("op is: {:?}", op);
                 if op == op::CLOSE_WRITE {
+                    println!("CLOSE_WRITE: {:?}", path);
                     return path
+                        .into_os_string()
+                        .into_string()
+                        .unwrap()
                 }
             },
             Ok(event) => println!("broken event: {:?}", event),

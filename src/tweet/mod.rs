@@ -8,11 +8,7 @@ use egg_mode::{KeyPair, Token};
 use egg_mode::media::{UploadBuilder, media_types};
 use tokio_core::reactor::{Core};
 
-
-pub fn tweet(message: &str, media_path: String) -> Result<(), Box<Error>> {
-    let mut core = Core::new().unwrap();
-    let handle = core.handle();
-
+fn get_token() -> Token {
     let con_token = KeyPair::new(
         config::TWITTER_CONSUMER_KEY,
         config::TWITTER_CONSUMER_SECRET
@@ -27,6 +23,15 @@ pub fn tweet(message: &str, media_path: String) -> Result<(), Box<Error>> {
         consumer: con_token,
         access: acc_token,
     };
+
+    return token
+}
+
+pub fn tweet(message: String, media_path: String) -> Result<(), Box<Error>> {
+    let mut core = Core::new().unwrap();
+    let handle = core.handle();
+
+    let token = get_token();
 
     let mut buffer = Vec::new();
 
