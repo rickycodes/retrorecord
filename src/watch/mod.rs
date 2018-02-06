@@ -1,29 +1,18 @@
-extern crate notify;
+use notify::{RecommendedWatcher, Watcher, raw_watcher, RecursiveMode, RawEvent};
+use std::sync::mpsc::{channel, Receiver};
 
-use self::notify::{op, Watcher, RecursiveMode, RawEvent, raw_watcher};
-use std::sync::mpsc::channel;
+pub struct FileWatcher {
+    pub watcher : RecommendedWatcher,
+    pub change_events: Receiver<RawEvent>,
+}
 
-pub fn watch(path: &str) -> String {
-    let (tx, rx) = channel();
-
+pub fn watch(path: &str) -> FileWatcher {
+    let (tx, rx) = channel::<RawEvent>();
     let mut watcher = raw_watcher(tx).unwrap();
-
     watcher.watch(path, RecursiveMode::Recursive).unwrap();
 
-    loop {
-        match rx.recv() {
-            Ok(RawEvent{path: Some(path), op: Ok(op), ..}) => {
-                // println!("op is: {:?}", op);
-                if op == op::CLOSE_WRITE {
-                    println!("file written: {:?}", path);
-                    return path
-                        .into_os_string()
-                        .into_string()
-                        .unwrap()
-                }
-            },
-            Ok(event) => println!("broken event: {:?}", event),
-            Err(e) => println!("watch error: {:?}", e),
-        }
+    FileWatcher {
+        watcher: watcher,
+        change_events: rx,
     }
 }
