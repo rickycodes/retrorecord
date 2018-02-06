@@ -13,9 +13,9 @@ pub fn watch(path: &str) -> String {
     loop {
         match rx.recv() {
             Ok(RawEvent{path: Some(path), op: Ok(op), ..}) => {
-                println!("op is: {:?}", op);
+                // println!("op is: {:?}", op);
                 if op == op::CLOSE_WRITE {
-                    println!("CLOSE_WRITE: {:?}", path);
+                    println!("file written: {:?}", path);
                     return path
                         .into_os_string()
                         .into_string()

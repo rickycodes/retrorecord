@@ -24,7 +24,7 @@ fn get_token() -> Token {
         access: acc_token,
     };
 
-    return token
+    token
 }
 
 pub fn tweet(message: String, media_path: String) -> Result<(), Box<Error>> {
