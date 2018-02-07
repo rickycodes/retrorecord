@@ -44,10 +44,16 @@ pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box
         let _ = file.read_to_end(&mut buffer).expect("cannot read picture file..");
     }
 
+    println!("buffer created!");
+
     let upload_builder = UploadBuilder::new(buffer, media_type);
     let media_handler = core.run(upload_builder.call(&token,&handle)).expect("handling media failed..");
 
+    println!("trying to do a draft!");
+
     let tweet_draft = DraftTweet::new(message).media_ids(&[media_handler.id]);
+
+    println!("draft created!");
 
     core.run(tweet_draft.send(&token, &handle)).expect("tweet failed..");
 
