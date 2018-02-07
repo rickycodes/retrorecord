@@ -6,10 +6,12 @@ use std::process::{Command, Stdio};
 use notify::{op, RawEvent};
 use std::{thread, env};
 use std::path::{Path, PathBuf};
+use egg_mode::media::media_types;
 
 mod watch;
 mod tweet;
 mod message;
+mod bots;
 
 fn path_to_string(path: PathBuf) -> String {
     path.into_os_string()
@@ -33,7 +35,7 @@ fn main() {
                         println!("file written: {:?}", path);
                         let screenshots_path = path_to_string(path);
 
-                        if let Ok(_) = tweet::tweet(message::get_message(), screenshots_path) {
+                        if let Ok(_) = tweet::tweet(message::get_message(bots::get_bots()), screenshots_path, media_types::image_png()) {
                             println!("posted tweet!");
                         }
                     }
@@ -72,6 +74,12 @@ fn main() {
 
                         if output.status.success() {
                             println!("gif complete!");
+                            let output = Path::new(&gifs).join("output.gif");
+                            let gif = path_to_string(output);
+                            println!("gif is {:?}", gif);
+                            if let Ok(_) = tweet::tweet(message::get_message("@DATAM0SHER".to_string()), gif, media_types::image_gif()) {
+                                println!("posted tweet!");
+                            }
                         }
                     }
                 },

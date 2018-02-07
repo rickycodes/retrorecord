@@ -1,11 +1,14 @@
 mod config;
 
+extern crate mime;
+
 use std::error::Error;
 use std::fs::File;
 use std::io::prelude::*;
 use egg_mode::tweet::DraftTweet;
 use egg_mode::{KeyPair, Token};
-use egg_mode::media::{UploadBuilder, media_types};
+use egg_mode::media::UploadBuilder;
+use self::mime::Mime;
 use tokio_core::reactor::{Core};
 
 fn get_token() -> Token {
@@ -27,7 +30,8 @@ fn get_token() -> Token {
     token
 }
 
-pub fn tweet(message: String, media_path: String) -> Result<(), Box<Error>> {
+pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box<Error>> {
+    println!("trying to do a tweet");
     let mut core = Core::new().unwrap();
     let handle = core.handle();
 
@@ -36,11 +40,11 @@ pub fn tweet(message: String, media_path: String) -> Result<(), Box<Error>> {
     let mut buffer = Vec::new();
 
     {
-        let mut file = File::open(media_path.clone()).expect("cannot open picture file..");
+        let mut file = File::open(media.clone()).expect("cannot open picture file..");
         let _ = file.read_to_end(&mut buffer).expect("cannot read picture file..");
     }
 
-    let upload_builder = UploadBuilder::new(buffer, media_types::image_png());
+    let upload_builder = UploadBuilder::new(buffer, media_type);
     let media_handler = core.run(upload_builder.call(&token,&handle)).expect("handling media failed..");
 
     let tweet_draft = DraftTweet::new(message).media_ids(&[media_handler.id]);

@@ -1,7 +1,7 @@
 extern crate rand;
-use self::rand::{thread_rng, Rng};
+use self::rand::Rng;
 
-pub fn get_message() -> String {
+pub fn get_message(bots: String) -> String {
     let messages: [&str; 8] = [
         "I am doing an video game",
         "↑↑↓↓←→←→BA",
@@ -15,29 +15,12 @@ pub fn get_message() -> String {
         TWO PLAYERS"
     ];
 
-    let mut static_bots: [&str; 12] = [
-        "@ArtyMash",
-        "@ArtyAbstract",
-        "@ArtyCurve",
-        "@ArtyNegative",
-        "@ArtyWinds",
-        "@pixelsorter",
-        "@ImgShuffleBOT",
-        "@DeepDreamThis",
-        "@a_quilt_bot",
-        "@IMG2ASCII",
-        "@kaleid_o_bot",
-        "@picwhip"
-    ];
-
     let num: usize = rand::thread_rng().gen_range(0, messages.len());
     let message = messages[num].to_string();
-
-    thread_rng().shuffle(&mut static_bots);
 
     format!("{}
 
 #bot2bot #botALLY
 
-/cc {}", message, static_bots[0 .. 3].join(" "))
+/cc {}", message, bots)
 }
