@@ -4,11 +4,18 @@ extern crate notify;
 
 use std::process::{Command, Stdio};
 use notify::{op, RawEvent};
-use std::thread;
+use std::{thread, env};
+use std::path::{Path, PathBuf};
 
 mod watch;
 mod tweet;
 mod message;
+
+fn path_to_string(path: PathBuf) -> String {
+    path.into_os_string()
+        .into_string()
+        .unwrap()
+}
 
 fn main() {
     let screenshots = "/home/pi/.config/retroarch/screenshots/";
@@ -24,10 +31,7 @@ fn main() {
                     // println!("op is: {:?}", op);
                     if op == op::CLOSE_WRITE {
                         println!("file written: {:?}", path);
-                        let screenshots_path = path
-                            .into_os_string()
-                            .into_string()
-                            .unwrap();
+                        let screenshots_path = path_to_string(path);
 
                         if let Ok(_) = tweet::tweet(message::get_message(), screenshots_path) {
                             println!("posted tweet!");
@@ -47,16 +51,17 @@ fn main() {
                     println!("op is: {:?}, path is: {:?}", op, path);
                     if op == op::CLOSE_WRITE {
                         println!("file written: {:?}", path);
-                        let recordings_path = path
-                            .into_os_string()
-                            .into_string()
-                            .unwrap();
+                        let recordings_path = path_to_string(path);
 
                         let gifs = "/home/pi/gifs/";
-                        let sh = "/home/pi/projects/retrorecord/mkvToGif.sh";
+                        let current_dir = env::current_dir().unwrap();
+
+                        println!("current_dir is: {:?}", current_dir);
+                        let sh = Path::new(&current_dir).join("mkvToGif.sh");
+                        println!("sh is: {:?}", sh);
 
                         let child = Command::new("bash")
-                            .args(&[sh.to_string(), recordings_path, gifs.to_string()])
+                            .args(&[path_to_string(sh), recordings_path, gifs.to_string()])
                             .stdout(Stdio::piped())
                             .spawn()
                             .expect("failed to execute child");
