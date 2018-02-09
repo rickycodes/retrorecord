@@ -6,7 +6,7 @@ use std::error::Error;
 use std::fs::File;
 use std::io::prelude::*;
 use egg_mode::tweet::DraftTweet;
-use egg_mode::{KeyPair, Token};
+use egg_mode::{KeyPair, Token, verify_tokens};
 use egg_mode::media::UploadBuilder;
 use self::mime::Mime;
 use tokio_core::reactor::{Core};
@@ -22,27 +22,31 @@ pub fn get_token() -> Token {
         config::TWITTER_ACCESS_TOKEN_SECRET
     );
 
-    let token = Token::Access {
+    Token::Access {
         consumer: con_token,
         access: acc_token,
-    };
-
-    token
+    }
 }
 
-pub fn tweet(message: String, buffer: &'static [u8], media_type: Mime) -> Result<(), Box<Error>> {
+pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box<Error>> {
     println!("trying to do a tweet");
     let mut core = Core::new().unwrap();
     let handle = core.handle();
 
     let token = get_token();
 
-    /* let mut buffer = Vec::new();
+    if let Err(err) = core.run(verify_tokens(&token, &handle)) {
+        println!("there is something wrong with the tokens: {:?}", err);
+    } else {
+        println!("tokens seem good!");
+    }
+
+    let mut buffer = Vec::new();
 
     {
         let mut file = File::open(media.clone()).expect("cannot open picture file..");
         let _ = file.read_to_end(&mut buffer).expect("cannot read picture file..");
-    } */
+    }
 
     println!("buffer created!");
 
