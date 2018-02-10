@@ -1,14 +1,12 @@
 mod config;
 
-extern crate mime;
-
 use std::error::Error;
 use std::fs::File;
 use std::io::prelude::*;
 use egg_mode::tweet::DraftTweet;
 use egg_mode::{KeyPair, Token, verify_tokens};
 use egg_mode::media::UploadBuilder;
-use self::mime::Mime;
+use mime::Mime;
 use tokio_core::reactor::{Core};
 
 pub fn get_token() -> Token {

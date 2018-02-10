@@ -1,6 +1,8 @@
 extern crate egg_mode;
 extern crate tokio_core;
 extern crate notify;
+extern crate mime;
+extern crate rand;
 
 mod watch;
 mod tweet;

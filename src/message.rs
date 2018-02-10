@@ -1,5 +1,4 @@
-extern crate rand;
-use self::rand::Rng;
+use rand::{thread_rng, Rng};
 
 pub fn get_message(bots: String) -> String {
     let messages: [&str; 8] = [
@@ -15,7 +14,7 @@ pub fn get_message(bots: String) -> String {
         TWO PLAYERS"
     ];
 
-    let num: usize = rand::thread_rng().gen_range(0, messages.len());
+    let num: usize = thread_rng().gen_range(0, messages.len());
     let message = messages[num].to_string();
 
     format!("{}

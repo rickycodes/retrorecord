@@ -1,5 +1,4 @@
-extern crate rand;
-use self::rand::{thread_rng, Rng};
+use rand::{thread_rng, Rng};
 
 pub fn get_bots() -> String {
     let mut static_bots: [&str; 12] = [

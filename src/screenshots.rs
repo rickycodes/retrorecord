@@ -1,5 +1,6 @@
 use notify::{op, RawEvent};
 use std::thread;
+use std::thread::spawn;
 use egg_mode::media::media_types::image_png;
 
 use tweet::tweet;
@@ -7,7 +8,6 @@ use message::get_message;
 use utils::path_to_string;
 use watch::watch;
 use bots::get_bots;
-use self::thread::spawn;
 
 pub fn screenshots() -> thread::JoinHandle<()> {
     let screenshots = "/home/pi/.config/retroarch/screenshots/";

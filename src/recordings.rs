@@ -1,6 +1,7 @@
 use std::process::{Command, Stdio};
 use notify::{op, RawEvent};
 use std::{thread, env};
+use std::thread::spawn;
 use std::path::Path;
 use egg_mode::media::media_types::image_gif;
 
@@ -8,7 +9,6 @@ use tweet::tweet;
 use message::get_message;
 use utils::path_to_string;
 use watch::watch;
-use self::thread::spawn;
 
 pub fn recordings() -> thread::JoinHandle<()> {
     let recordings = "/home/pi/recordings/";
