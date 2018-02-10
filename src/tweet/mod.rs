@@ -29,7 +29,6 @@ pub fn get_token() -> Token {
 }
 
 pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box<Error>> {
-    println!("trying to do a tweet");
     let mut core = Core::new().unwrap();
     let handle = core.handle();
 
@@ -37,8 +36,6 @@ pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box
 
     if let Err(err) = core.run(verify_tokens(&token, &handle)) {
         println!("there is something wrong with the tokens: {:?}", err);
-    } else {
-        println!("tokens seem good!");
     }
 
     let mut buffer = Vec::new();
@@ -48,16 +45,10 @@ pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box
         let _ = file.read_to_end(&mut buffer).expect("cannot read picture file..");
     }
 
-    println!("buffer created!");
-
     let upload_builder = UploadBuilder::new(buffer, media_type);
     let media_handler = core.run(upload_builder.call(&token, &handle)).expect("handling media failed..");
 
-    println!("trying to do a draft!");
-
     let tweet = DraftTweet::new(message).media_ids(&[media_handler.id]);
-
-    println!("draft created!");
 
     core.run(tweet.send(&token, &handle)).expect("tweet failed..");
 
