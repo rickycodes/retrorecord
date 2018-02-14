@@ -1,3 +1,4 @@
 language: rust
+before_install: mv src/tweet/config.rs.sample src/tweet/config.rs
 rust:
   - stable
