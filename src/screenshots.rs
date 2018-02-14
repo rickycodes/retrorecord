@@ -20,9 +20,8 @@ pub fn screenshots() -> thread::JoinHandle<()> {
           // println!("op is: {:?}", op);
           if op == op::CLOSE_WRITE {
             println!("file written: {:?}", path);
-            let screenshots_path = path_to_string(path);
 
-            if let Ok(_) = tweet(get_message(get_bots()), screenshots_path, image_png()) {
+            if let Ok(_) = tweet(get_message(get_bots(3)), path_to_string(path), image_png()) {
               println!("posted tweet!");
             }
           }
