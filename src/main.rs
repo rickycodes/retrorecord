@@ -16,9 +16,9 @@ use screenshots::screenshots;
 use recordings::recordings;
 
 fn main() {
-    println!("application started...");
-    let screenshots_thread = screenshots();
-    let recordings_thread = recordings();
-    screenshots_thread.join().expect("The screenshots thread has panicked");
-    recordings_thread.join().expect("The recordings thread has panicked");
+  println!("application started...");
+  let screenshots_thread = screenshots();
+  let recordings_thread = recordings();
+  screenshots_thread.join().expect("The screenshots thread has panicked");
+  recordings_thread.join().expect("The recordings thread has panicked");
 }
