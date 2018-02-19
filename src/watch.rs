@@ -4,12 +4,12 @@ use std::thread;
 use std::thread::spawn;
 use std::path::PathBuf;
 
-pub struct FileWatcher {
+struct FileWatcher {
   pub watcher : RecommendedWatcher,
   pub change_events: Receiver<RawEvent>,
 }
 
-pub fn watch(path: &str) -> FileWatcher {
+fn watch(path: &str) -> FileWatcher {
   let (tx, rx) = channel::<RawEvent>();
   let mut watcher = raw_watcher(tx).unwrap();
   watcher.watch(path, RecursiveMode::Recursive).unwrap();
