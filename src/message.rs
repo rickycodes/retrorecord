@@ -19,7 +19,5 @@ pub fn get_message(bots: String) -> String {
 
   format!("{}
 
-#bot2bot #botALLY
-
 /cc {}", message, bots)
 }

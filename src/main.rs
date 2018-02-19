@@ -9,16 +9,23 @@ mod tweet;
 mod message;
 mod bots;
 mod utils;
-mod screenshots;
-mod recordings;
+mod screenshot;
+mod recording;
 
-use screenshots::screenshots;
-use recordings::recordings;
+use screenshot::screenshot;
+use recording::recording;
+use watch::spawn_watcher;
 
 fn main() {
   println!("application started...");
-  let screenshots_thread = screenshots();
-  let recordings_thread = recordings();
+  let screenshots_thread = spawn_watcher(
+    "/home/pi/.config/retroarch/screenshots/",
+    screenshot
+  );
+  let recordings_thread = spawn_watcher(
+    "/home/pi/recordings/",
+    recording
+  );
   screenshots_thread.join().expect("The screenshots thread has panicked");
   recordings_thread.join().expect("The recordings thread has panicked");
 }
