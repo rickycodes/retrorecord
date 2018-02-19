@@ -33,8 +33,37 @@ pub fn spawn_watcher(path: &str, f: fn(PathBuf)) -> thread::JoinHandle<()> {
           }
         },
         Ok(event) => println!("broken event: {:?}", event),
-        Err(e) => println!("watch error: {:?}", e),
+        Err(event) => println!("watch error: {:?}", event),
       }
     }
   })
+}
+
+#[cfg(test)]
+mod test {
+  use std::process::Command;
+  use std::env;
+  use std::path::{Path, PathBuf};
+  use utils::path_to_string;
+  use super::*;
+
+  #[test]
+  fn spawn_watcher_close_write_op() {
+    let current_dir = env::current_dir().unwrap();
+    let test_file = Path::new(&current_dir).join("test.txt");
+
+    fn f(_path: PathBuf) {
+      assert!(true);
+    }
+
+    spawn_watcher(
+      &path_to_string(current_dir),
+      f
+    );
+
+    Command::new("touch")
+      .arg(&path_to_string(test_file))
+      .spawn()
+      .expect("failed to execute child");
+  }
 }

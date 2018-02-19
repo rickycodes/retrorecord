@@ -22,7 +22,7 @@ pub fn get_bots(how_many: usize) -> String {
 }
 
 #[cfg(test)]
-mod t {
+mod test {
   use super::*;
 
   #[test]
