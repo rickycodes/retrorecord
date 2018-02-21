@@ -2,10 +2,10 @@ use std::process::{Command, Stdio};
 use std::env;
 use std::path::{Path, PathBuf};
 use egg_mode::media::media_types::image_gif;
-
 use tweet::tweet;
 use message::get_message;
 use utils::path_to_string;
+use ask::ask;
 
 pub fn recording(path: PathBuf) {
   println!("file written: {:?}", path);
@@ -33,8 +33,10 @@ pub fn recording(path: PathBuf) {
 
     println!("gif_path is {:?}", gif_path);
 
-    if let Ok(_) = tweet(get_message("@DATAM0SHER".to_string()), gif_path, image_gif()) {
-      println!("posted tweet!");
+    if ask("Would you like to post this recording?") {
+      if let Ok(_) = tweet(get_message("@DATAM0SHER".to_string()), gif_path, image_gif()) {
+        println!("posted tweet!");
+      }
     }
   }
 }

@@ -3,6 +3,7 @@ extern crate tokio_core;
 extern crate notify;
 extern crate mime;
 extern crate rand;
+extern crate dialoguer;
 
 mod watch;
 mod tweet;
@@ -11,6 +12,7 @@ mod bots;
 mod utils;
 mod screenshot;
 mod recording;
+mod ask;
 
 use screenshot::screenshot;
 use recording::recording;
