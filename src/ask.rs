@@ -1,8 +1,8 @@
 use dialoguer::Confirmation;
 
-pub fn ask(question: &'static str) -> bool {
+pub fn ask(question: &str) -> bool {
   let result;
-  if Confirmation::new(&question).interact().unwrap() {
+  if Confirmation::new(question).interact().unwrap() {
     println!("yo sick!");
     result = true;
   } else {
