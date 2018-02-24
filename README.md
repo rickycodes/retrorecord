@@ -27,7 +27,7 @@ clone this repo somewhere:
 `git clone git@github.com:rickycodes/retrorecord.git`
 
 ## Configuration
-You'll need to modify values [here](https://github.com/rickycodes/retrorecord/blob/master/src/tweet/config.rs.sample) to match your needs  
+You'll need to modify values [here](https://github.com/rickycodes/retrorecord/blob/master/src/config.rs.sample) to match your needs (the folder structure needs to be set up by you and depending on how you configure RetroArch the folders may vary)  
 
 this file also needs to be renamed to config.rs
 
