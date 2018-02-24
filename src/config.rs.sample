@@ -4,3 +4,4 @@ pub static TWITTER_ACCESS_TOKEN:        &'static str = "";
 pub static TWITTER_ACCESS_TOKEN_SECRET: &'static str = "";
 pub static SCREENSHOTS_DIR:             &'static str = "/home/pi/.config/retroarch/screenshots/";
 pub static RECORDINGS_DIR:              &'static str = "/home/pi/recordings/";
+pub static GIFS_DIR:                    &'static str = "/home/pi/gifs/";

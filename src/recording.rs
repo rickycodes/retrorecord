@@ -6,12 +6,13 @@ use tweet::tweet;
 use message::get_message;
 use utils::path_to_string;
 use ask::ask;
+use config::GIFS_DIR;
 
 pub fn recording(path: PathBuf) {
   println!("file written: {:?}", path);
   let recordings_path = path_to_string(path);
 
-  let gifs = "/home/pi/gifs/";
+  let gifs = GIFS_DIR;
   let current_dir = env::current_dir().unwrap();
 
   let sh = Path::new(&current_dir).join("mkvToGif.sh");
