@@ -1,5 +1,3 @@
-mod config;
-
 use std::error::Error;
 use std::fs::File;
 use std::io::prelude::*;
@@ -8,16 +6,22 @@ use egg_mode::{KeyPair, Token, verify_tokens};
 use egg_mode::media::UploadBuilder;
 use mime::Mime;
 use tokio_core::reactor::{Core};
+use config::{
+  TWITTER_CONSUMER_KEY,
+  TWITTER_CONSUMER_SECRET,
+  TWITTER_ACCESS_TOKEN,
+  TWITTER_ACCESS_TOKEN_SECRET
+};
 
 pub fn get_token() -> Token {
   let con_token = KeyPair::new(
-    config::TWITTER_CONSUMER_KEY,
-    config::TWITTER_CONSUMER_SECRET
+    TWITTER_CONSUMER_KEY,
+    TWITTER_CONSUMER_SECRET
   );
 
   let acc_token = KeyPair::new(
-    config::TWITTER_ACCESS_TOKEN,
-    config::TWITTER_ACCESS_TOKEN_SECRET
+    TWITTER_ACCESS_TOKEN,
+    TWITTER_ACCESS_TOKEN_SECRET
   );
 
   Token::Access {

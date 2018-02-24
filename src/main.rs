@@ -13,19 +13,24 @@ mod utils;
 mod screenshot;
 mod recording;
 mod ask;
+mod config;
 
 use screenshot::screenshot;
 use recording::recording;
 use watch::spawn_watcher;
+use config::{
+  SCREENSHOTS_DIR,
+  RECORDINGS_DIR
+};
 
 fn main() {
   println!("application started...");
   let screenshots_thread = spawn_watcher(
-    "/home/pi/.config/retroarch/screenshots/",
+    SCREENSHOTS_DIR,
     screenshot
   );
   let recordings_thread = spawn_watcher(
-    "/home/pi/recordings/",
+    RECORDINGS_DIR,
     recording
   );
   screenshots_thread.join().expect("The screenshots thread has panicked");
