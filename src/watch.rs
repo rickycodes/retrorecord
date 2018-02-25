@@ -43,7 +43,7 @@ pub fn spawn_watcher(path: &str, f: fn(String)) -> thread::JoinHandle<()> {
 mod test {
   use std::process::Command;
   use std::env;
-  use std::path::{Path, PathBuf};
+  use std::path::Path;
   use utils::path_to_string;
   use super::*;
 
@@ -52,7 +52,7 @@ mod test {
     let current_dir = env::current_dir().unwrap();
     let test_file = Path::new(&current_dir).join("test.txt");
 
-    fn f(_path: PathBuf) {
+    fn f(_path: String) {
       assert!(true);
     }
 
