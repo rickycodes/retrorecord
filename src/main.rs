@@ -4,6 +4,7 @@ extern crate notify;
 extern crate mime;
 extern crate rand;
 extern crate dialoguer;
+extern crate regex;
 
 mod watch;
 mod tweet;
@@ -14,6 +15,7 @@ mod screenshot;
 mod recording;
 mod ask;
 mod config;
+mod test_path;
 
 use screenshot::screenshot;
 use recording::recording;

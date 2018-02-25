@@ -2,7 +2,7 @@ use notify::{RecommendedWatcher, Watcher, raw_watcher, RecursiveMode, op, RawEve
 use std::sync::mpsc::{channel, Receiver};
 use std::thread;
 use std::thread::spawn;
-use std::path::PathBuf;
+use utils::path_to_string;
 
 struct FileWatcher {
   pub watcher : RecommendedWatcher,
@@ -20,7 +20,7 @@ fn watch(path: &str) -> FileWatcher {
   }
 }
 
-pub fn spawn_watcher(path: &str, f: fn(PathBuf)) -> thread::JoinHandle<()> {
+pub fn spawn_watcher(path: &str, f: fn(String)) -> thread::JoinHandle<()> {
   let watcher = watch(&path);
 
   spawn(move|| {
@@ -29,7 +29,7 @@ pub fn spawn_watcher(path: &str, f: fn(PathBuf)) -> thread::JoinHandle<()> {
         Ok(RawEvent{path: Some(path), op: Ok(op), ..}) => {
           // println!("op is: {:?}", op);
           if op == op::CLOSE_WRITE {
-            f(path);
+            f(path_to_string(path));
           }
         },
         Ok(event) => println!("broken event: {:?}", event),

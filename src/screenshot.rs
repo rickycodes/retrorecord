@@ -1,17 +1,20 @@
 use egg_mode::media::media_types::image_png;
 use tweet::tweet;
 use message::get_message;
-use utils::path_to_string;
 use bots::get_bots;
-use std::path::PathBuf;
 use ask::ask;
+use test_path::test_path;
 
-pub fn screenshot(path: PathBuf) {
-  println!("file written: {:?}", path);
+pub fn screenshot(path_string: String) {
+  let copy = path_string.clone();
 
-  if ask("Would you like to post this screenshot?") {
-    if let Ok(_) = tweet(get_message(get_bots(3)), path_to_string(path), image_png()) {
-      println!("posted tweet!");
+  if test_path(path_string, r"\.png") {
+    println!("file written: {:?}", copy);
+
+    if ask("Would you like to post this screenshot?") {
+      if let Ok(_) = tweet(get_message(get_bots(3)), copy, image_png()) {
+        println!("posted tweet!");
+      }
     }
   }
 }

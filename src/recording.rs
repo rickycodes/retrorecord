@@ -1,42 +1,46 @@
 use std::process::{Command, Stdio};
 use std::env;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use egg_mode::media::media_types::image_gif;
 use tweet::tweet;
 use message::get_message;
 use utils::path_to_string;
 use ask::ask;
 use config::GIFS_DIR;
+use test_path::test_path;
 
-pub fn recording(path: PathBuf) {
-  println!("file written: {:?}", path);
-  let recordings_path = path_to_string(path);
+pub fn recording(path_string: String) {
+  let copy = path_string.clone();
 
-  let gifs = GIFS_DIR;
-  let current_dir = env::current_dir().unwrap();
+  if test_path(path_string, r"\.mkv") {
+    println!("file written: {:?}", copy);
 
-  let sh = Path::new(&current_dir).join("mkvToGif.sh");
+    let gifs = GIFS_DIR;
+    let current_dir = env::current_dir().unwrap();
 
-  let child = Command::new("bash")
-    .args(&[path_to_string(sh), recordings_path, gifs.to_string()])
-    .stdout(Stdio::piped())
-    .spawn()
-    .expect("failed to execute child");
+    let sh = Path::new(&current_dir).join("mkvToGif.sh");
 
-  let output = child
-    .wait_with_output()
-    .expect("failed to wait on child");
+    let child = Command::new("bash")
+      .args(&[path_to_string(sh), copy, gifs.to_string()])
+      .stdout(Stdio::piped())
+      .spawn()
+      .expect("failed to execute child");
 
-  if output.status.success() {
-    println!("gif complete!");
-    let output = Path::new(&gifs).join("output.gif");
-    let gif_path = path_to_string(output);
+    let output = child
+      .wait_with_output()
+      .expect("failed to wait on child");
 
-    println!("gif_path is {:?}", gif_path);
+    if output.status.success() {
+      println!("gif complete!");
+      let output = Path::new(&gifs).join("output.gif");
+      let gif_path = path_to_string(output);
 
-    if ask("Would you like to post this recording?") {
-      if let Ok(_) = tweet(get_message("@DATAM0SHER".to_string()), gif_path, image_gif()) {
-        println!("posted tweet!");
+      println!("gif_path is {:?}", gif_path);
+
+      if ask("Would you like to post this recording?") {
+        if let Ok(_) = tweet(get_message("@DATAM0SHER".to_string()), gif_path, image_gif()) {
+          println!("posted tweet!");
+        }
       }
     }
   }

@@ -36,8 +36,8 @@ pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box
 
   let token = get_token();
 
-  if let Err(err) = core.run(verify_tokens(&token, &handle)) {
-    println!("there is something wrong with the tokens: {:?}", err);
+  if let Err(error) = core.run(verify_tokens(&token, &handle)) {
+    println!("there is something wrong with the tokens: {:?}", error);
   }
 
   let mut buffer = Vec::new();
