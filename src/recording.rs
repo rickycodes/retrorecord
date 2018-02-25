@@ -15,33 +15,39 @@ pub fn recording(path_string: String) {
   if test_path(path_string, r"\.mkv") {
     println!("file written: {:?}", copy);
 
-    let gifs = GIFS_DIR;
-    let current_dir = env::current_dir().unwrap();
+    if ask("Would you like to post this recording?") {
+      let gifs = GIFS_DIR;
+      let current_dir = env::current_dir().unwrap();
 
-    let sh = Path::new(&current_dir).join("mkvToGif.sh");
+      let sh = Path::new(&current_dir).join("mkvToGif.sh");
 
-    let child = Command::new("bash")
-      .args(&[path_to_string(sh), copy, gifs.to_string()])
-      .stdout(Stdio::piped())
-      .spawn()
-      .expect("failed to execute child");
+      let child = Command::new("bash")
+        .args(&[path_to_string(sh), copy, gifs.to_string()])
+        .stdout(Stdio::piped())
+        .spawn()
+        .expect("failed to execute child");
 
-    let output = child
-      .wait_with_output()
-      .expect("failed to wait on child");
+      let output = child
+        .wait_with_output()
+        .expect("failed to wait on child");
 
-    if output.status.success() {
-      println!("gif complete!");
-      let output = Path::new(&gifs).join("output.gif");
-      let gif_path = path_to_string(output);
+      if output.status.success() {
+        println!("gif complete!");
+        let output = Path::new(&gifs).join("output.gif");
+        let gif_path = path_to_string(output);
 
-      println!("gif_path is {:?}", gif_path);
+        println!("gif_path is {:?}", gif_path);
 
-      if ask("Would you like to post this recording?") {
         if let Ok(_) = tweet(get_message("@DATAM0SHER".to_string()), gif_path, image_gif()) {
           println!("posted tweet!");
         }
       }
+    } else {
+      // trash the file
+      Command::new("rm")
+        .arg(&copy)
+        .spawn()
+        .expect("failed remove file");
     }
   }
 }
