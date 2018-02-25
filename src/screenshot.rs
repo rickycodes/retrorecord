@@ -12,7 +12,11 @@ pub fn screenshot(path_string: String) {
     println!("file written: {:?}", copy);
 
     if ask("Would you like to post this screenshot?") {
-      if let Ok(_) = tweet(get_message(get_bots(3)), copy, image_png()) {
+      if let Ok(_) = tweet(
+        get_message(get_bots(3)),
+        copy,
+        image_png()
+      ) {
         println!("posted tweet!");
       }
     }

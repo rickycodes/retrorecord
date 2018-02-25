@@ -35,6 +35,10 @@ fn main() {
     RECORDINGS_DIR,
     recording
   );
-  screenshots_thread.join().expect("The screenshots thread has panicked");
-  recordings_thread.join().expect("The recordings thread has panicked");
+  screenshots_thread
+    .join()
+    .expect("The screenshots thread has panicked");
+  recordings_thread
+    .join()
+    .expect("The recordings thread has panicked");
 }

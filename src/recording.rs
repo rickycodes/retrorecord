@@ -38,7 +38,11 @@ pub fn recording(path_string: String) {
 
         println!("gif_path is {:?}", gif_path);
 
-        if let Ok(_) = tweet(get_message("@DATAM0SHER".to_string()), gif_path, image_gif()) {
+        if let Ok(_) = tweet(
+          get_message("@DATAM0SHER".to_string()),
+          gif_path,
+          image_gif()
+        ) {
           println!("posted tweet!");
         }
       }

@@ -43,12 +43,16 @@ pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box
   let mut buffer = Vec::new();
 
   {
-    let mut file = File::open(media.clone()).expect("cannot open picture file..");
-    let _ = file.read_to_end(&mut buffer).expect("cannot read picture file..");
+    let mut file = File::open(media.clone())
+      .expect("cannot open picture file..");
+    let _ = file.read_to_end(&mut buffer)
+      .expect("cannot read picture file..");
   }
 
   let upload_builder = UploadBuilder::new(buffer, media_type);
-  let media_handler = core.run(upload_builder.call(&token, &handle)).expect("handling media failed..");
+  let media_handler = core
+    .run(upload_builder.call(&token, &handle))
+    .expect("handling media failed..");
 
   let tweet = DraftTweet::new(message).media_ids(&[media_handler.id]);
 

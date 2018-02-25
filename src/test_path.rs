@@ -11,11 +11,17 @@ mod test {
 
   #[test]
   fn test_path_matches() {
-    assert!(test_path("/home/pi/lol/wat/test.png".to_string(), r"\.png"));
+    assert!(
+      test_path("/home/pi/lol/wat/test.png".to_string(),
+      r"\.png")
+    );
   }
 
   #[test]
   fn test_path_does_not_match() {
-    assert!(test_path("/home/pi/lol/wat/test.jpg".to_string(), r"\.png") == false);
+    assert!(
+      test_path("/home/pi/lol/wat/test.jpg".to_string(),
+      r"\.png"
+    ) == false);
   }
 }
