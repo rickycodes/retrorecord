@@ -21,7 +21,7 @@ fn watch(path: &str) -> FileWatcher {
 }
 
 pub fn spawn_watcher(path: &str, f: fn(String)) -> thread::JoinHandle<()> {
-  let watcher = watch(&path);
+  let watcher = watch(path);
 
   spawn(move|| {
     loop {
