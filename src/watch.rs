@@ -20,7 +20,7 @@ fn watch(path: &str) -> FileWatcher {
   }
 }
 
-pub fn spawn_watcher(path: &str, f: fn(String)) -> thread::JoinHandle<()> {
+pub fn spawn_watcher(path: &str, f: fn(String, bool), prompt: bool) -> thread::JoinHandle<()> {
   let watcher = watch(path);
 
   spawn(move|| {
@@ -29,7 +29,7 @@ pub fn spawn_watcher(path: &str, f: fn(String)) -> thread::JoinHandle<()> {
         Ok(RawEvent{path: Some(path), op: Ok(op), ..}) => {
           // println!("op is: {:?}", op);
           if op == op::CLOSE_WRITE {
-            f(path_to_string(path));
+            f(path_to_string(path), prompt);
           }
         },
         Ok(event) => println!("broken event: {:?}", event),

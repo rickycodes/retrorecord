@@ -5,6 +5,7 @@ extern crate mime;
 extern crate rand;
 extern crate dialoguer;
 extern crate regex;
+extern crate clap;
 
 mod watch;
 mod tweet;
@@ -17,6 +18,7 @@ mod ask;
 mod config;
 mod test_path;
 
+use clap::{Arg, App};
 use screenshot::screenshot;
 use recording::recording;
 use watch::spawn_watcher;
@@ -26,14 +28,33 @@ use config::{
 };
 
 fn main() {
-  println!("application started...");
+  let matches = App::new("retrorecord")
+    .version("1.0")
+    .author("Ricky Miller <ricky.miller@gmail.com>")
+    .about("post screenshots/recrord video games from RetroPie to twitter")
+    .arg(
+      Arg::with_name("prompt")
+        .short("p")
+        .required(false)
+        .long("prompt")
+        .help("prompt to post")
+        .takes_value(false)
+    )
+    .get_matches();
+
+  let prompt: bool = matches.is_present("prompt");
+
+  println!("application started...\nprompts are {}", if prompt { "ON" } else { "OFF" });
+
   let screenshots_thread = spawn_watcher(
     SCREENSHOTS_DIR,
-    screenshot
+    screenshot,
+    prompt
   );
   let recordings_thread = spawn_watcher(
     RECORDINGS_DIR,
-    recording
+    recording,
+    prompt
   );
   screenshots_thread
     .join()

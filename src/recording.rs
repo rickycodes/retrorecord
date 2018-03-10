@@ -9,13 +9,13 @@ use ask::ask;
 use config::GIFS_DIR;
 use test_path::test_path;
 
-pub fn recording(path_string: String) {
+pub fn recording(path_string: String, prompt: bool) {
   let copy = path_string.clone();
 
   if test_path(path_string, r"\.mkv") {
     println!("file written: {:?}", copy);
 
-    if ask("Would you like to post this recording?") {
+    if ask("Would you like to post this recording?", prompt) {
       let gifs = GIFS_DIR;
       let current_dir = env::current_dir().unwrap();
 
