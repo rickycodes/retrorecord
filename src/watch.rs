@@ -52,13 +52,14 @@ mod test {
     let current_dir = env::current_dir().unwrap();
     let test_file = Path::new(&current_dir).join("test.txt");
 
-    fn f(_path: String) {
+    fn f(_path: String, _prompt: bool) {
       assert!(true);
     }
 
     spawn_watcher(
       &path_to_string(current_dir),
-      f
+      f,
+      false
     );
 
     Command::new("touch")
