@@ -8,7 +8,8 @@ path=$2
 ffmpeg -sseof -10 -t 10 -i ${file} -vf scale=${scale}:-1:flags=lanczos,fps=${fps} ${path}ffout%03d.png
 
 # convert frames to gif
-convert -loop 0 ${path}ffout*.png ${path}output.gif
+# convert -loop 0 ${path}ffout*.png ${path}output.gif
+gifski --fps ${fps} -o ${path}output.gif ${path}ffout*.png
 
 echo "gif created at ${path}output.gif!"
 

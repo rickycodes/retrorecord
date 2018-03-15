@@ -11,7 +11,7 @@ What you really really need is:
 | software    | command   | version  |
 |-------------|-----------|----------|
 | cargo       | `cargo`   | >=0.22.0 |
-| ImageMagick | `convert` | =6.8.9-9 |
+| gifski      | `gifski`  | =0.8.2   |
 | ffmpeg      | `ffmpeg`  | =3.1.4   |
 
 (I am sure versions can flex a bit)
