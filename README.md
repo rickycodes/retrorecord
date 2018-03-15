@@ -31,7 +31,7 @@ You'll need to modify values [here](https://github.com/rickycodes/retrorecord/bl
 
 this file also needs to be renamed to config.rs
 
-## build
+## Build
 build with cargo:  
 `cargo build --verbose`
 
