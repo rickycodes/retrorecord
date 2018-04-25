@@ -1,6 +1,6 @@
 ## Retrorecord [![Build Status](https://travis-ci.org/rickycodes/retrorecord.svg?branch=master)](https://travis-ci.org/rickycodes/retrorecord)
 
-rust app to post screenshots/record video games from my raspberry pi (RetroPie) to twitter:  
+share screenshots and recrordings from RetroPie to twitter:  
 https://twitter.com/whatmeplaying
 
 ## Requirements
