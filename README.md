@@ -81,7 +81,7 @@ Select default emulator, or Select emulator for ROM:
 Select the emulator where you've enabled recording:  
 <img src='https://i.imgur.com/SdaEb0D.png' />  
 Now simply launching the game will start recording:  
-<img src='https://i.imgur.com/5ktwgIQ.png' />
+<img src='https://i.imgur.com/5ktwgIQ.png' />  
 Once you exit the game the recording will stop and you should seem some ffmpeg output from retrorecord followed by:  
 ```sh
 gif complete!
