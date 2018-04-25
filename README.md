@@ -3,6 +3,8 @@
 share screenshots and recrordings from RetroPie to twitter:  
 https://twitter.com/whatmeplaying
 
+<img src='https://i.imgur.com/38tFHBP.png' />
+
 ## Requirements
 This was setup to run on a Raspberry Pi 3 Model B running [RetroPie](https://retropie.org.uk/). I'm sure it would work on other [Retroarch](https://www.retroarch.com/)'s as well. I wouldn't try this on an older Pi 1, or single core system. The screenshot stuff should work (maybe this should be configurable?) but the recording/gif converting would likely be too slow on a single core system (it can already bog down the Pi 3 at times).
 
@@ -72,14 +74,14 @@ posted tweet!
 
 ### Recording
 Launch a game that has an emulator with an option where you've enabled recording:  
-<img src='https://i.imgur.com/G3CRixa.png' />  
-(Press a button to configure)  
+(Press a button to configure):  
+<img src='https://i.imgur.com/HUWeMCN.png' />  
 Select default emulator, or Select emulator for ROM:  
-<img src='https://i.imgur.com/9DOGJ48.png' />  
+<img src='https://i.imgur.com/XSoi1ay.png' />  
 Select the emulator where you've enabled recording:  
-<img src='https://i.imgur.com/GCfVrWu.png' />  
+<img src='https://i.imgur.com/SdaEb0D.png' />  
 Now simply launching the game will start recording:  
-<img src='https://i.imgur.com/zuNSYCk.png' />
+<img src='https://i.imgur.com/5ktwgIQ.png' />
 Once you exit the game the recording will stop and you should seem some ffmpeg output from retrorecord followed by:  
 ```sh
 gif complete!
