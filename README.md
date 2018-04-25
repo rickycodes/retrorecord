@@ -33,17 +33,60 @@ this file also needs to be renamed to config.rs
 
 ## Build
 build with cargo:  
-`cargo build --verbose`
+`cargo build`  
+or:  
+`cargo build --release`
 
 ## Tests
 run unit tests:  
 `cargo test --verbose`
 
 ## Startup
-just run the binary:
-`./target/debug/retrorecord`
+run the binary:  
+`./retrorecord`  
+or:  
+`./retrorecord ----prompt`  
+(this will prompt you before posting)
 
 (Good luck and jah bless!)
+
+## Usage:
+run the binary:  
+`./retrorecord`  
+and you should see:  
+```sh
+application started...
+prompts are OFF
+```
+
+### Screenshot:
+Get to a screen in game that you'd like to capture and enter the main menu of RetroArch:  
+<img src='https://i.imgur.com/a1ZUJ5X.png' />  
+Go into the "Quick Menu" and select "Take Screenshot":  
+<img src='https://i.imgur.com/eTQhxAQ.png' />  
+retrorecord will print something like this to stdout:  
+```sh
+file written: "/home/pi/.config/retroarch/screenshots/Super Mario Bros 3 (U) (PRG 1)-180425-190211.png"
+posted tweet!
+```
+
+### Recording
+Launch a game that has an emulator with an option where you've enabled recording:  
+<img src='https://i.imgur.com/G3CRixa.png' />  
+(Press a button to configure)  
+Select default emulator, or Select emulator for ROM:  
+<img src='https://i.imgur.com/9DOGJ48.png' />  
+Select the emulator where you've enabled recording:  
+<img src='https://i.imgur.com/GCfVrWu.png' />  
+Now simply launching the game will start recording:  
+<img src='https://i.imgur.com/zuNSYCk.png' />
+Once you exit the game the recording will stop and you should seem some ffmpeg output from retrorecord followed by:  
+```sh
+gif complete!
+gif_path is "/home/pi/gifs/output.gif"
+posted tweet!
+```
+If you want to record specific sections of a game consider using save states: play the game with the normal emulator to a point where you'd like to start recording, save state then relaunch with the recording enabled and load state to record from that point onward.
 
 ## Notes
 All this app really does is watch folders for screenshots & recordings, so presumably you could get this to work on most systems? While this was used to create [whatmeplaying](https://twitter.com/whatmeplaying) you could use a similar setup to post screenshots/videos/gifs from games to anywhere (so long as there's an API of some sort).
