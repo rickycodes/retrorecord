@@ -3,7 +3,7 @@
 share screenshots and recrordings from RetroPie to twitter:  
 https://twitter.com/whatmeplaying
 
-<img src='https://i.imgur.com/38tFHBP.png' />
+<img src='./screenshots/mario.png' />
 
 ## Requirements
 This was setup to run on a Raspberry Pi 3 Model B running [RetroPie](https://retropie.org.uk/). I'm sure it would work on other [Retroarch](https://www.retroarch.com/)'s as well. I wouldn't try this on an older Pi 1, or single core system. The screenshot stuff should work (maybe this should be configurable?) but the recording/gif converting would likely be too slow on a single core system (it can already bog down the Pi 3 at times).
@@ -62,10 +62,12 @@ prompts are OFF
 ```
 
 ### Screenshot:
-Get to a screen in game that you'd like to capture and enter the main menu of RetroArch:  
-<img src='https://i.imgur.com/a1ZUJ5X.png' />  
-Go into the "Quick Menu" and select "Take Screenshot":  
-<img src='https://i.imgur.com/eTQhxAQ.png' />  
+| <img src='./screenshots/retroarch-main-menu.png' /> |
+|-|
+| Get to a screen in game that you'd like to capture and enter the main menu of RetroArch: |
+| <img src='./screenshots/retroarch-screenshot.png' /> |
+| Go into the "Quick Menu" and select "Take Screenshot": |
+
 retrorecord will print something like this to stdout:  
 ```sh
 file written: "/home/pi/.config/retroarch/screenshots/Super Mario Bros 3 (U) (PRG 1)-180425-190211.png"
@@ -73,15 +75,17 @@ posted tweet!
 ```
 
 ### Recording
-Launch a game that has an emulator with an option where you've enabled recording:  
-(Press a button to configure):  
-<img src='https://i.imgur.com/HUWeMCN.png' />  
-Select default emulator, or Select emulator for ROM:  
-<img src='https://i.imgur.com/XSoi1ay.png' />  
-Select the emulator where you've enabled recording:  
-<img src='https://i.imgur.com/SdaEb0D.png' />  
-Now simply launching the game will start recording:  
-<img src='https://i.imgur.com/5ktwgIQ.png' />  
+
+| <img src='./screenshots/hit-a.png' /> |
+|-|
+|Launch a game that has an emulator with an option where you've enabled recording: <br />(Press a button to configure):|
+| <img src='./screenshots/default-emulator.png' />      |
+| Select default emulator, or Select emulator for ROM: |
+| <img src='./screenshots/default-emulator-record.png' />  |
+| Select the emulator where you've enabled recording: |
+| <img src='./screenshots/default-emulator-record-launch.png' /> |
+| Now simply launching the game will start recording: |
+
 Once you exit the game the recording will stop and you should seem some ffmpeg output from retrorecord followed by:  
 ```sh
 gif complete!
