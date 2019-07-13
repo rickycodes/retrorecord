@@ -50,8 +50,6 @@ or:
 `./retrorecord ----prompt`  
 (this will prompt you before posting)
 
-(Good luck and jah bless!)
-
 ## Usage:
 run the binary:  
 `./retrorecord`  
