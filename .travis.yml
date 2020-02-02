@@ -2,3 +2,7 @@ language: rust
 before_install: mv src/config.rs.sample src/config.rs
 rust:
   - stable
+
+language: shell
+script:
+  - bash -c 'shopt -s globstar nullglob; shellcheck **/*.{sh,ksh,bash}'
