@@ -30,7 +30,7 @@ pub fn get_token() -> Token {
   }
 }
 
-pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box<Error>> {
+pub fn tweet(message: String, media: String, media_type: Mime) -> Result<(), Box<dyn Error>> {
   let mut core = Core::new().unwrap();
   let handle = core.handle();
 
