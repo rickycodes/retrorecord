@@ -15,17 +15,13 @@ mod utils;
 mod screenshot;
 mod recording;
 mod ask;
-mod config;
 mod test_path;
 
 use clap::{Arg, App};
 use screenshot::screenshot;
 use recording::recording;
 use watch::spawn_watcher;
-use config::{
-  SCREENSHOTS_DIR,
-  RECORDINGS_DIR
-};
+use utils::read_env_var;
 
 fn main() {
   let matches = App::new("retrorecord")
@@ -47,12 +43,12 @@ fn main() {
   println!("application started...\nprompts are {}", if prompt { "ON" } else { "OFF" });
 
   let screenshots_thread = spawn_watcher(
-    SCREENSHOTS_DIR,
+    &read_env_var("SCREENSHOTS_DIR"),
     screenshot,
     prompt
   );
   let recordings_thread = spawn_watcher(
-    RECORDINGS_DIR,
+    &read_env_var("RECORDINGS_DIR"),
     recording,
     prompt
   );

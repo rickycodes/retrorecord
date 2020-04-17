@@ -6,22 +6,17 @@ use egg_mode::{KeyPair, Token, verify_tokens};
 use egg_mode::media::UploadBuilder;
 use mime::Mime;
 use tokio_core::reactor::{Core};
-use config::{
-  TWITTER_CONSUMER_KEY,
-  TWITTER_CONSUMER_SECRET,
-  TWITTER_ACCESS_TOKEN,
-  TWITTER_ACCESS_TOKEN_SECRET
-};
+use utils::read_env_var;
 
 pub fn get_token() -> Token {
   let con_token = KeyPair::new(
-    TWITTER_CONSUMER_KEY,
-    TWITTER_CONSUMER_SECRET
+    read_env_var("TWITTER_CONSUMER_KEY"),
+    read_env_var("TWITTER_CONSUMER_SECRET")
   );
 
   let acc_token = KeyPair::new(
-    TWITTER_ACCESS_TOKEN,
-    TWITTER_ACCESS_TOKEN_SECRET
+    read_env_var("TWITTER_ACCESS_TOKEN"),
+    read_env_var("TWITTER_ACCESS_TOKEN_SECRET")
   );
 
   Token::Access {

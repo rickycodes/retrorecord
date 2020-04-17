@@ -4,9 +4,8 @@ use std::path::Path;
 use egg_mode::media::media_types::image_gif;
 use tweet::tweet;
 use message::get_message;
-use utils::path_to_string;
+use utils::{path_to_string, read_env_var};
 use ask::ask;
-use config::GIFS_DIR;
 use test_path::test_path;
 
 pub fn recording(path_string: String, prompt: bool) {
@@ -16,7 +15,7 @@ pub fn recording(path_string: String, prompt: bool) {
     println!("file written: {:?}", copy);
 
     if ask("Would you like to post this recording?", prompt) {
-      let gifs = GIFS_DIR;
+      let gifs = read_env_var("GIFS_DIR");
       let current_dir = env::current_dir().unwrap();
 
       let sh = Path::new(&current_dir).join("mkvToGif.sh");
