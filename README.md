@@ -8,7 +8,7 @@ https://twitter.com/whatmeplaying
 ## Requirements
 This was setup to run on a Raspberry Pi 3 Model B running [RetroPie](https://retropie.org.uk/). I'm sure it would work on other [Retroarch](https://www.retroarch.com/)'s as well. I wouldn't try this on an older Pi 1, or single core system. The screenshot stuff should work (maybe this should be configurable?) but the recording/gif converting would likely be too slow on a single core system (it can already bog down the Pi 3 at times).
 
-What you really really need is:
+Requirements:
 
 | software    | command   | version  |
 |-------------|-----------|----------|
@@ -29,9 +29,25 @@ clone this repo somewhere:
 `git clone git@github.com:rickycodes/retrorecord.git`
 
 ## Configuration
-You'll need to modify values [here](https://github.com/rickycodes/retrorecord/blob/master/src/config.rs.sample) to match your needs (the folder structure needs to be set up by you and depending on how you configure RetroArch the folders may vary)  
+The application requires the following environment variables to be `export`ed on your system eg:
 
-this file also needs to be renamed to config.rs
+```sh
+export TWITTER_CONSUMER_KEY= \
+TWITTER_CONSUMER_SECRET= \
+TWITTER_ACCESS_TOKEN= \
+TWITTER_ACCESS_TOKEN_SECRET= \
+SCREENSHOTS_DIR=/home/pi/.config/retroarch/screenshots/ \
+RECORDINGS_DIR=/home/pi/recordings/ \
+GIFS_DIR=/home/pi/gifs/
+```
+The directories should match what you have set in Retropie's own config.
+
+If you don't have the above env vars set the application will quit on startup:
+```
+application started...
+prompts are OFF
+Couldn't read SCREENSHOTS_DIR (environment variable not found)
+```
 
 ## Build
 build with cargo:  
@@ -47,7 +63,7 @@ run unit tests:
 run the binary:  
 `./retrorecord`  
 or:  
-`./retrorecord ----prompt`  
+`./retrorecord --prompt`  
 (this will prompt you before posting)
 
 ## Usage:
