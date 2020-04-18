@@ -52,6 +52,27 @@ Couldn't read SCREENSHOTS_DIR (environment variable not found)
 ## Cross compilation
 If you're interested in building a bin that works on a pi from a non armv7 arch I've included [a Docker file](Dockerfile) and [a build script](build.sh) which provide some clues on how to do this.
 
+### Building the container
+`docker build -t retrorecord .`
+
+### Running it
+`docker run --publish 8000:8000 --detach --name rr retrorecord`
+
+### Building on the container
+`docker exec -it rr cargo build --verbose --target=armv7-unknown-linux-gnueabihf --release`
+
+This will create a release bin than you can then move to to your pi or host eg:
+
+`wget http://localhost:8000/target/armv7-unknown-linux-gnueabihf/release/retrorecord`
+
+Don't forget to make it executable!
+
+`sudo chmod +x retrorecord`
+
+If you try running on an arch that doesn't match the target you'll get:
+
+`bash: ./retrorecord: cannot execute binary file: Exec format error`
+
 ## Build
 build with cargo:  
 `cargo build`  
