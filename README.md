@@ -49,6 +49,9 @@ prompts are OFF
 Couldn't read SCREENSHOTS_DIR (environment variable not found)
 ```
 
+## Cross compilation
+If you're interested in building a bin that works on a pi from a non armv7 arch I've included [a Docker file](Dockerfile) and [a build script](build.sh) which provide some clues on how to do this.
+
 ## Build
 build with cargo:  
 `cargo build`  
