@@ -61,7 +61,7 @@ If you're interested in building a bin that works on a pi from a non armv7 arch 
 ### Building on the container
 `docker exec -it rr cargo build --verbose --target=armv7-unknown-linux-gnueabihf --release`
 
-This will create a release bin than you can then move to to your pi or host eg:
+This will create a release bin that you can then move to to your pi or host os eg:
 
 `wget http://localhost:8000/target/armv7-unknown-linux-gnueabihf/release/retrorecord`
 
