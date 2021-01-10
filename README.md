@@ -1,12 +1,12 @@
 ## Retrorecord [![Build Status](https://travis-ci.org/rickycodes/retrorecord.svg?branch=master)](https://travis-ci.org/rickycodes/retrorecord)
 
-share screenshots and recrordings from RetroPie to twitter:  
+share screenshots and recrordings to twitter:  
 https://twitter.com/whatmeplaying
 
 <img src='./screenshots/mario.png' />
 
 ## Requirements
-This was setup to run on a Raspberry Pi 3 Model B running [RetroPie](https://retropie.org.uk/). I'm sure it would work on other [Retroarch](https://www.retroarch.com/)'s as well. I wouldn't try this on an older Pi 1, or single core system. The screenshot stuff should work (maybe this should be configurable?) but the recording/gif converting would likely be too slow on a single core system (it can already bog down the Pi 3 at times).
+This was originally built to run on a Raspberry Pi 3 Model B running [RetroPie](https://retropie.org.uk/). I've been able to get it working on my [MiSTer](https://github.com/MiSTer-devel/Main_MiSTer/wiki) as well. I'm sure it would work on other [Retroarch](https://www.retroarch.com/)'s or with any system that's capturing screenshots or videos. I wouldn't try this on an older Pi 1, or single core system. The screenshot stuff should work (maybe this should be configurable?) but the recording/gif converting would likely be too slow on a single core system (it can already bog down the Pi 3 at times).
 
 Requirements:
 
@@ -16,7 +16,7 @@ Requirements:
 | gifski      | `gifski`  | =0.8.2   |
 | ffmpeg      | `ffmpeg`  | =3.1.4   |
 
-(I am sure versions can flex a bit)
+You need cargo to compile. gifski and ffmpeg are only required for video encoding and if you're only capturing screenshots they're not required.
 
 If you are setting these things up on RetroPie you can follow these guides:
 
