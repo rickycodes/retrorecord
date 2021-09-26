@@ -1,7 +1,7 @@
 use rand::{thread_rng, Rng};
 
 pub fn get_message(bots: String) -> String {
-  let messages: [&str; 8] = [
+  let messages: [str; 8] = [
     "I am doing an video game",
     "↑↑↓↓←→←→BA",
     "beep",

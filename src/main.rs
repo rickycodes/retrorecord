@@ -27,7 +27,7 @@ fn main() {
   let matches = App::new("retrorecord")
     .version("1.0")
     .author("Ricky Miller <ricky.miller@gmail.com>")
-    .about("post screenshots/recrord video games from RetroPie to twitter")
+    .about("post screenshots or video game recordings from your system to twitter in real time")
     .arg(
       Arg::with_name("prompt")
         .short("p")

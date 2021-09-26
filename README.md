@@ -40,7 +40,7 @@ SCREENSHOTS_DIR=/home/pi/.config/retroarch/screenshots/ \
 RECORDINGS_DIR=/home/pi/recordings/ \
 GIFS_DIR=/home/pi/gifs/
 ```
-The directories should match what you have set in Retropie's own config.
+The directories should match what you have set on the system. `/home/pi/.config/retroarch/screenshots/` above is common for `retroarch`, 
 
 If you don't have the above env vars set the application will quit on startup:
 ```
