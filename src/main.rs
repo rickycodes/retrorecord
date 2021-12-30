@@ -1,61 +1,80 @@
-extern crate egg_mode;
-extern crate tokio_core;
-extern crate notify;
-extern crate mime;
-extern crate rand;
 extern crate dialoguer;
+extern crate egg_mode;
+extern crate mime;
+extern crate notify;
 extern crate regex;
-extern crate clap;
 
-mod watch;
 mod tweet;
-mod message;
-mod bots;
 mod utils;
-mod screenshot;
-mod recording;
-mod ask;
-mod test_path;
 
-use clap::{Arg, App};
-use screenshot::screenshot;
-use recording::recording;
-use watch::spawn_watcher;
 use utils::read_env_var;
 
+use crate::tweet::tweet;
+use crate::utils::path_to_string;
+use dialoguer::{theme::ColorfulTheme, Input};
+use notify::{op, raw_watcher, RawEvent, RecommendedWatcher, RecursiveMode, Watcher};
+use std::sync::mpsc::{channel, Receiver};
+
+struct FileWatcher {
+    #[allow(dead_code)]
+    pub watcher: RecommendedWatcher,
+    pub change_events: Receiver<RawEvent>,
+}
+
+fn watch(path: &str) -> FileWatcher {
+    let (tx, rx) = channel::<RawEvent>();
+    let mut watcher = raw_watcher(tx).unwrap();
+    watcher.watch(path, RecursiveMode::Recursive).unwrap();
+
+    FileWatcher {
+        watcher,
+        change_events: rx,
+    }
+}
+
+fn get_input() -> String {
+    Input::with_theme(&ColorfulTheme::default())
+        .with_prompt("What game is this?")
+        .interact_text()
+        .unwrap()
+}
+
+fn prep_tweet(shots: Vec<String>) -> Vec<String> {
+    let input = get_input();
+    let hashtags = " #MiSTerFPGA";
+    let content = input + hashtags;
+
+    if tweet(content, shots).is_ok() {
+        println!("posted tweet!");
+    }
+
+    return Vec::new();
+}
+
 fn main() {
-  let matches = App::new("retrorecord")
-    .version("1.0")
-    .author("Ricky Miller <ricky.miller@gmail.com>")
-    .about("post screenshots or video game recordings from your system to twitter in real time")
-    .arg(
-      Arg::with_name("prompt")
-        .short("p")
-        .required(false)
-        .long("prompt")
-        .help("prompt to post")
-        .takes_value(false)
-    )
-    .get_matches();
+    let path = &read_env_var("SCREENSHOTS_DIR");
+    let watcher = watch(path);
+    let mut shots = Vec::new();
 
-  let prompt: bool = matches.is_present("prompt");
+    loop {
+        match watcher.change_events.recv() {
+            Ok(RawEvent {
+                path: Some(path),
+                op: Ok(op),
+                ..
+            }) => {
+                if op == op::CLOSE_WRITE {
+                    shots.push(path_to_string(path));
 
-  println!("application started...\nprompts are {}", if prompt { "ON" } else { "OFF" });
+                    println!("count: {}", shots.len());
 
-  let screenshots_thread = spawn_watcher(
-    &read_env_var("SCREENSHOTS_DIR"),
-    screenshot,
-    prompt
-  );
-  let recordings_thread = spawn_watcher(
-    &read_env_var("RECORDINGS_DIR"),
-    recording,
-    prompt
-  );
-  screenshots_thread
-    .join()
-    .expect("The screenshots thread has panicked");
-  recordings_thread
-    .join()
-    .expect("The recordings thread has panicked");
+                    if shots.len() == 4 {
+                        shots = prep_tweet(shots.clone());
+                    }
+                }
+            }
+            Ok(event) => println!("broken event: {:?}", event),
+            Err(event) => println!("watch error: {:?}", event),
+        }
+    }
 }
