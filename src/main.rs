@@ -4,6 +4,7 @@ extern crate mime;
 extern crate notify;
 extern crate regex;
 
+mod constants;
 mod tweet;
 mod utils;
 
@@ -12,14 +13,12 @@ use utils::read_env_var;
 use crate::tweet::tweet;
 use crate::utils::path_to_string;
 use dialoguer::{theme::ColorfulTheme, Input};
-use notify::{op, raw_watcher, RawEvent, RecommendedWatcher, RecursiveMode, Watcher};
-use std::sync::mpsc::{channel, Receiver};
+use notify::{op, raw_watcher, RawEvent, RecursiveMode, Watcher};
+use std::sync::mpsc::channel;
 
-struct FileWatcher {
-    #[allow(dead_code)]
-    pub watcher: RecommendedWatcher,
-    pub change_events: Receiver<RawEvent>,
-}
+use crate::constants::{
+    group, FileWatcher, EMPTY, INITIAL_PROMPT, NOT_SET, POSTED_TWEET, SCREENSHOTS_DIR, SPACE, TAGS,
+};
 
 fn watch(path: &str) -> FileWatcher {
     let (tx, rx) = channel::<RawEvent>();
@@ -34,25 +33,27 @@ fn watch(path: &str) -> FileWatcher {
 
 fn get_input() -> String {
     Input::with_theme(&ColorfulTheme::default())
-        .with_prompt("What game is this?")
+        .with_prompt(INITIAL_PROMPT)
         .interact_text()
         .unwrap()
 }
 
-fn prep_tweet(shots: Vec<String>) -> Vec<String> {
+fn prep_tweet(shots: Vec<String>) {
     let input = get_input();
-    let hashtags = " #MiSTerFPGA";
-    let content = input + hashtags;
+    let content = input + SPACE + &TAGS.join(SPACE);
+
+    println!("{:?}", content);
 
     if tweet(content, shots).is_ok() {
-        println!("posted tweet!");
+        println!("{:?}", POSTED_TWEET);
     }
-
-    return Vec::new();
 }
 
 fn main() {
-    let path = &read_env_var("SCREENSHOTS_DIR");
+    if SCREENSHOTS_DIR == EMPTY {
+        panic!("{:?}", SCREENSHOTS_DIR.to_owned() + NOT_SET);
+    }
+    let path = &read_env_var(SCREENSHOTS_DIR);
     let watcher = watch(path);
     let mut shots = Vec::new();
 
@@ -68,8 +69,9 @@ fn main() {
 
                     println!("count: {}", shots.len());
 
-                    if shots.len() == 4 {
-                        shots = prep_tweet(shots.clone());
+                    if group(shots.len()) {
+                        // this should take a slice?
+                        prep_tweet(shots.clone());
                     }
                 }
             }
