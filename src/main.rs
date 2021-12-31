@@ -17,7 +17,7 @@ use notify::{op, raw_watcher, RawEvent, RecursiveMode, Watcher};
 use std::sync::mpsc::channel;
 
 use crate::constants::{
-    group, FileWatcher, EMPTY, INITIAL_PROMPT, NOT_SET, POSTED_TWEET, SCREENSHOTS_DIR, SPACE, TAGS,
+    group, GROUP_BY, FileWatcher, EMPTY, INITIAL_PROMPT, NOT_SET, POSTED_TWEET, SCREENSHOTS_DIR, SPACE, TAGS,
 };
 
 fn watch(path: &str) -> FileWatcher {
@@ -69,8 +69,7 @@ fn main() {
 
                     println!("count: {}", shots.len());
 
-                    if group(shots.len()) {
-                        // this should take a slice?
+                    if shots.len() % GROUP_BY == 0 {
                         prep_tweet(shots.clone());
                     }
                 }

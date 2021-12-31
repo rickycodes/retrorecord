@@ -2,9 +2,6 @@ use notify::{RawEvent, RecommendedWatcher};
 use std::sync::mpsc::Receiver;
 
 pub const GROUP_BY: usize = 4;
-pub fn group(size: usize) -> bool {
-    size % GROUP_BY == 1
-}
 
 // could also have tag input?
 pub const TAGS: [&str; 1] = ["#MiSTerFPGA" /*, "StreetFighter" */];
