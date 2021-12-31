@@ -7,7 +7,7 @@ pub fn group(size: usize) -> bool {
 }
 
 // could also have tag input?
-pub const TAGS: [&str; 1] = ["MiSTerFPGA" /*, "StreetFighter" */];
+pub const TAGS: [&str; 1] = ["#MiSTerFPGA" /*, "StreetFighter" */];
 
 // could also do something with @?
 
