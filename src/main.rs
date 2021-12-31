@@ -17,7 +17,7 @@ use notify::{op, raw_watcher, RawEvent, RecursiveMode, Watcher};
 use std::sync::mpsc::channel;
 
 use crate::constants::{
-    group, GROUP_BY, FileWatcher, EMPTY, INITIAL_PROMPT, NOT_SET, POSTED_TWEET, SCREENSHOTS_DIR, SPACE, TAGS,
+    GROUP_BY, FileWatcher, EMPTY, INITIAL_PROMPT, NOT_SET, POSTED_TWEET, SCREENSHOTS_DIR, SPACE, TAGS,
 };
 
 fn watch(path: &str) -> FileWatcher {
