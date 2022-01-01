@@ -1,8 +1,6 @@
 extern crate dialoguer;
 extern crate egg_mode;
-extern crate mime;
 extern crate notify;
-extern crate regex;
 
 mod constants;
 mod tweet;
