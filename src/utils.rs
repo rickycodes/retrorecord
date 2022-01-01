@@ -59,7 +59,7 @@ pub fn watch(path: &str) -> FileWatcher {
     }
 }
 
-pub fn get_input() -> String {
+fn get_input() -> String {
     Input::with_theme(&ColorfulTheme::default())
         .with_prompt(INITIAL_PROMPT)
         .interact_text()
