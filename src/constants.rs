@@ -4,7 +4,7 @@ use std::sync::mpsc::Receiver;
 pub const GROUP_BY: usize = 4;
 
 // could also have tag input?
-pub const TAGS: [&str; 1] = ["#MiSTerFPGA" /*, "StreetFighter" */];
+pub const TAGS: [&str; 1] = ["#MiSTerFPGA"];
 
 // could also do something with @?
 

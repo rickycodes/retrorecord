@@ -10,44 +10,12 @@ mod utils;
 
 use utils::read_env_var;
 
-use crate::tweet::tweet;
-use crate::utils::path_to_string;
-use dialoguer::{theme::ColorfulTheme, Input};
-use notify::{op, raw_watcher, RawEvent, RecursiveMode, Watcher};
-use std::sync::mpsc::channel;
+use crate::utils::{path_to_string, prep_tweet, watch};
+use notify::{op, RawEvent};
 
 use crate::constants::{
-    GROUP_BY, FileWatcher, EMPTY, INITIAL_PROMPT, NOT_SET, POSTED_TWEET, SCREENSHOTS_DIR, SPACE, TAGS,
+    EMPTY, GROUP_BY, NOT_SET, SCREENSHOTS_DIR
 };
-
-fn watch(path: &str) -> FileWatcher {
-    let (tx, rx) = channel::<RawEvent>();
-    let mut watcher = raw_watcher(tx).unwrap();
-    watcher.watch(path, RecursiveMode::Recursive).unwrap();
-
-    FileWatcher {
-        watcher,
-        change_events: rx,
-    }
-}
-
-fn get_input() -> String {
-    Input::with_theme(&ColorfulTheme::default())
-        .with_prompt(INITIAL_PROMPT)
-        .interact_text()
-        .unwrap()
-}
-
-fn prep_tweet(shots: Vec<String>) {
-    let input = get_input();
-    let content = input + SPACE + &TAGS.join(SPACE);
-
-    println!("{:?}", content);
-
-    if tweet(content, shots).is_ok() {
-        println!("{:?}", POSTED_TWEET);
-    }
-}
 
 fn main() {
     if SCREENSHOTS_DIR == EMPTY {
