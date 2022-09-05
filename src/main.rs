@@ -11,9 +11,7 @@ use utils::read_env_var;
 use crate::utils::{path_to_string, prep_tweet, watch};
 use notify::{op, RawEvent};
 
-use crate::constants::{
-    EMPTY, GROUP_BY, NOT_SET, SCREENSHOTS_DIR
-};
+use crate::constants::{EMPTY, GROUP_BY, NOT_SET, SCREENSHOTS_DIR};
 
 fn main() {
     if SCREENSHOTS_DIR == EMPTY {

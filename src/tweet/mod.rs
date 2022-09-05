@@ -18,23 +18,25 @@ pub fn tweet(message: String, shots: Vec<String>) -> Result<(), Box<dyn Error>> 
         println!("there is something wrong with the tokens: {:?}", error);
     }
 
-    let mut media_ids = Vec::new();
     let last_four = &shots[shots.len() - GROUP_BY..];
 
-    for media in last_four {
-        let mut buffer = Vec::new();
-        {
-            let mut file = File::open(media.clone()).expect(CANNOT_OPEN);
-            let _ = file.read_to_end(&mut buffer).expect(CANNOT_READ);
-        }
+    let media_ids: Vec<u64> = last_four
+        .iter()
+        .map(|media| {
+            let mut buffer = Vec::new();
+            {
+                let mut file = File::open(media.clone()).expect(CANNOT_OPEN);
+                let _ = file.read_to_end(&mut buffer).expect(CANNOT_READ);
+            }
 
-        let upload_builder = UploadBuilder::new(buffer, image_png());
-        let media_handler = core
-            .run(upload_builder.call(&token))
-            .expect(HANDLING_FAILED);
+            let upload_builder = UploadBuilder::new(buffer, image_png());
+            let media_handler = core
+                .run(upload_builder.call(&token))
+                .expect(HANDLING_FAILED);
 
-        media_ids.push(media_handler.id)
-    }
+            media_handler.id
+        })
+        .collect();
 
     let tweet = DraftTweet::new(message).media_ids(&media_ids);
 

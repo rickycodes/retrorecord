@@ -1,6 +1,6 @@
 use crate::constants::{
-    TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY,
-    TWITTER_CONSUMER_SECRET,
+    FileWatcher, INITIAL_PROMPT, POSTED_TWEET, SPACE, TAGS, TWITTER_ACCESS_TOKEN,
+    TWITTER_ACCESS_TOKEN_SECRET, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET,
 };
 
 use egg_mode::{KeyPair, Token};
@@ -12,10 +12,6 @@ use crate::tweet::tweet;
 use dialoguer::{theme::ColorfulTheme, Input};
 use notify::{raw_watcher, RawEvent, RecursiveMode, Watcher};
 use std::sync::mpsc::channel;
-
-use crate::constants::{
-    FileWatcher, INITIAL_PROMPT, POSTED_TWEET, SPACE, TAGS
-};
 
 pub fn path_to_string(path: PathBuf) -> String {
     path.into_os_string().into_string().unwrap()
